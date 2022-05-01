@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float runSpeed = 7;
     public float rotationSpeed = 250;
-
+    public float fuerzaPutiaso = 10;
     public Animator animator;
 
     private bool play;
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(c.tag);
         if(c.tag == "Putiaso") {
             Debug.Log("Tremendo putiaso me has dado");
-            rb.AddForce(10*collision.contacts[0].normal, ForceMode.Impulse);
+            rb.AddForce(fuerzaPutiaso*collision.contacts[0].normal, ForceMode.Impulse);
             x = 0;
         }
     }
