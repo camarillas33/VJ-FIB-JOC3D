@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     private float x, y;
+    private bool collisioned = false;
+    private bool finished = false;
     public Rigidbody rb;
 
     void Start()
@@ -45,7 +47,9 @@ public class PlayerController : MonoBehaviour
         }
             animator.SetFloat("speedX", x);
             animator.SetFloat("speedY", y);
-        
+            animator.SetBool("col", collisioned); 
+            animator.SetBool("end", finished);
+
     } 
 
     public void setPlaying(bool b) {
@@ -63,6 +67,7 @@ public class PlayerController : MonoBehaviour
             transform.position = initialPosition;
             transform.rotation = initialRotation;
             x = 0;
+            collisioned = false;
         }
         else if(other.tag == "TurnRight") {
             Debug.Log("Triggered by Turn");
@@ -72,14 +77,30 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Triggered by StopTurn");
             x = 0;
         }
+       
     }
 
-    void OnCollisionEnter(Collision collision) {
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Finish")
+        {
+            finished = true;
+            play = false;
+            Camera c = GetComponent<Camera>();
+            c.transform.position = new Vector3(0.08f,0.08f,0.17f);
+            c.transform.rotation = new Quaternion(10.34f, -158.17f, 0.0f, 0.0f);
+        }
+    }
+
+        void OnCollisionEnter(Collision collision) {
         Collider c = collision.collider;
         Debug.Log(c.tag);
-        if(c.tag == "Putiaso") {
+        if (c.tag == "Putiaso")
+        {
+            collisioned = true;
             Debug.Log("Tremendo putiaso me has dado");
-            rb.AddForce(fuerzaPutiaso*collision.contacts[0].normal, ForceMode.Impulse);
+            Vector3 height = new Vector3(0, 4, 0);
+            rb.AddForce(fuerzaPutiaso * collision.contacts[0].normal + height, ForceMode.Impulse);
             x = 0;
         }
     }
