@@ -17,21 +17,21 @@ public class CameraController : MonoBehaviour
         camera2 = player02.GetComponentInChildren<Camera>();
 
         camera1.enabled = true;
-        camera2.enabled = false;
+        camera2.enabled = true;
 
         player01.GetComponent<PlayerController>().setPlaying(true);
-        player02.GetComponent<PlayerController>().setPlaying(false);
+        player02.GetComponent<PlayerController>().setPlaying(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C)) {
+        /*(Input.GetKeyDown(KeyCode.C)) {
             camera1.enabled = !camera1.enabled;
             camera2.enabled = !camera2.enabled;
             
             player01.GetComponent<PlayerController>().changePlaying();
             player02.GetComponent<PlayerController>().changePlaying();
-        }
+        }*/
     }
 }
