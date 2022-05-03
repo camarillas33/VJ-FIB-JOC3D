@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667555, g: 0.4842717, b: 0.56452394, a: 1}
+  m_IndirectSpecularColor: {r: 0.43667564, g: 0.48427135, b: 0.5645233, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -175,10 +175,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 963194226, guid: 3cf5887c04b2e7e50ab76b5d37586a99, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 963194227, guid: 3cf5887c04b2e7e50ab76b5d37586a99, type: 3}
       propertyPath: m_ClearFlags
       value: 2
@@ -691,11 +687,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-<<<<<<< HEAD
   - {fileID: 2100000, guid: c4f1de024dce24bef95c4dabd864662a, type: 2}
-=======
-  - {fileID: 2100000, guid: 9457008f9897c67eabe2e9d813253fb0, type: 2}
->>>>>>> 077cd2781a83f8f1f024a32dcdb711d643b588da
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -732,13 +724,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 551922698}
-<<<<<<< HEAD
   m_LocalRotation: {x: -0.007886541, y: 0.0114361225, z: -0.014424333, w: 0.99979943}
   m_LocalPosition: {x: 4.81, y: -1.7, z: 2.02}
-=======
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.81, y: -0.1, z: 2.02}
->>>>>>> 077cd2781a83f8f1f024a32dcdb711d643b588da
   m_LocalScale: {x: 78.67542, y: 78.67542, z: 78.67542}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1264,7 +1251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8322890607459698233, guid: 4d22b9d3fe588c9c7930106802c0ac81, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.7
+      value: -15.83
       objectReference: {fileID: 0}
     - target: {fileID: 8322890607459698233, guid: 4d22b9d3fe588c9c7930106802c0ac81, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1911,7 +1898,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f6f6538e95f1e740b7c20f3e2753ea3, type: 3}
-<<<<<<< HEAD
 --- !u!1001 &1907753482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2038,51 +2024,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9b09f5b91cf4dc44a0650b594fa6da5, type: 3}
-=======
---- !u!4 &1723710633 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7752189739592574276, guid: 4547c84b7faa45443803348f6f9710d8, type: 3}
-  m_PrefabInstance: {fileID: 110698245}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1929408372 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 963194225, guid: 3cf5887c04b2e7e50ab76b5d37586a99, type: 3}
-  m_PrefabInstance: {fileID: 181022635}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1929408376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929408372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
->>>>>>> 077cd2781a83f8f1f024a32dcdb711d643b588da
 --- !u!1001 &1985955571
 PrefabInstance:
   m_ObjectHideFlags: 0
