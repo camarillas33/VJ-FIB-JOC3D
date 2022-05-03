@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-       initialPosition = transform.position;
-       initialRotation = transform.rotation;
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.tag == "Respawn") {
             Debug.Log("Triggered by Death");
+            rb.velocity = Vector3.zero;
             transform.position = initialPosition;
             transform.rotation = initialRotation;
             x = 0;
@@ -87,9 +88,10 @@ public class PlayerController : MonoBehaviour
         { 
             finished = true;
             play = false;
-            MainCamera = GetComponent<Camera>();
-            MainCamera.transform.position = new Vector3(0.08f,0.08f,0.17f);
-            MainCamera.transform.rotation = new Quaternion(10.34f, -158.17f, 0.0f, 0.0f);
+            MainCamera = GetComponentInChildren<Camera>();
+        
+            MainCamera.transform.rotation = Quaternion.Euler(0,180,0);
+            MainCamera.transform.localPosition = new Vector3(0.0f,0.08f,0.3f);
         }
     }
 
