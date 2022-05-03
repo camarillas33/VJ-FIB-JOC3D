@@ -641,7 +641,6 @@ Transform:
   m_Children:
   - {fileID: 8435262208863570710}
   - {fileID: 1322151143462426091}
-  - {fileID: 4524703621797803992}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -709,7 +708,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 3
   rotationSpeed: 250
+  fuerzaPutiaso: 10
   animator: {fileID: 4524703621596028628}
+  MainCamera: {fileID: 0}
   freeMovement: 1
   rb: {fileID: 0}
 --- !u!1 &4383651168530550319
@@ -769,13 +770,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4524703621797803993}
-  m_LocalRotation: {x: 0.19936788, y: 0, z: 0, w: 0.97992474}
-  m_LocalPosition: {x: -0, y: 0.125, z: -0.267}
+  m_LocalRotation: {x: 0.19936788, y: -0, z: -0, w: 0.97992474}
+  m_LocalPosition: {x: 0, y: 0.125, z: -0.26699996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4125368201890065282}
-  m_RootOrder: 2
+  m_Father: {fileID: 1322151143462426091}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 23, y: 0, z: 0}
 --- !u!20 &4524703621797803998
 Camera:
@@ -1206,7 +1207,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4524703621797803992}
   m_Father: {fileID: 4125368201890065282}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

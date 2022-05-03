@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     private bool play;
+    public Camera MainCamera;
     public bool freeMovement = false;
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -83,12 +84,12 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Finish")
-        {
+        { 
             finished = true;
             play = false;
-            Camera c = GetComponent<Camera>();
-            c.transform.position = new Vector3(0.08f,0.08f,0.17f);
-            c.transform.rotation = new Quaternion(10.34f, -158.17f, 0.0f, 0.0f);
+            MainCamera = GetComponent<Camera>();
+            MainCamera.transform.position = new Vector3(0.08f,0.08f,0.17f);
+            MainCamera.transform.rotation = new Quaternion(10.34f, -158.17f, 0.0f, 0.0f);
         }
     }
 
