@@ -8,12 +8,13 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 250;
     public float fuerzaPutiaso = 10;
     public Animator animator;
-
+    private bool aplastado = false;
+    private float colisionTime;
     private bool play;
     public Camera MainCamera;
     public bool freeMovement = false;
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
+    private Vector3 initialPosition, initialScale, initialCameraPosition;
+    private Quaternion initialRotation, initialCameraRotation;
     private float x, y;
     private bool collisioned = false;
     private bool finished = false;
@@ -24,6 +25,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         initialPosition = transform.position;
         initialRotation = transform.rotation;
+        initialScale = transform.localScale;
+        MainCamera = GetComponentInChildren<Camera>();
+        initialCameraPosition = MainCamera.transform.localPosition;
+        initialCameraRotation = MainCamera.transform.localRotation;
+        colisionTime = 0;
     }
 
     // Update is called once per frame
@@ -44,9 +50,27 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0,x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
             
             transform.Translate(0, 0 ,y * runSpeed * Time.deltaTime); // Mou el personatge
+            
 
         }
-            animator.SetFloat("speedX", x);
+
+        if (aplastado)
+        {
+
+            colisionTime += Time.deltaTime;
+            Debug.Log(colisionTime);
+            if (colisionTime > 2.0f)
+            {
+                aplastado = false;
+                colisionTime = 0;
+                MainCamera.transform.localPosition = initialCameraPosition;
+                transform.localScale = initialScale;
+                respawn();
+            }
+
+        }
+
+        animator.SetFloat("speedX", x);
             animator.SetFloat("speedY", y);
             animator.SetBool("col", collisioned); 
             animator.SetBool("end", finished);
@@ -60,16 +84,23 @@ public class PlayerController : MonoBehaviour
     public void changePlaying() {
         play = !play;
     }
-    
+
+    private void respawn()
+    {
+        rb.velocity = Vector3.zero;
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        transform.localScale = initialScale;
+        x = 0;
+        collisioned = false;
+        play = true;
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Respawn") {
-            Debug.Log("Triggered by Death");
-            rb.velocity = Vector3.zero;
-            transform.position = initialPosition;
-            transform.rotation = initialRotation;
-            x = 0;
-            collisioned = false;
+            respawn();
         }
         else if(other.tag == "TurnRight") {
             Debug.Log("Triggered by Turn");
@@ -79,7 +110,23 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Triggered by StopTurn");
             x = 0;
         }
-       
+        else if(other.tag == "Aplastador")
+        {
+
+            transform.localScale = new Vector3(initialScale.x, 5, initialScale.z * 1.5f);
+            MainCamera.transform.localPosition = new Vector3(initialCameraPosition.x, initialCameraPosition.y + 0.5f, initialCameraPosition.z);
+            aplastado = true;
+            colisionTime = 0;
+            play = false;
+
+        }
+        else if(other.tag == "Sierra")
+        {
+            aplastado = true;
+            colisionTime = 0;
+            play = false;
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -88,7 +135,7 @@ public class PlayerController : MonoBehaviour
         { 
             finished = true;
             play = false;
-            MainCamera = GetComponentInChildren<Camera>();
+            
         
             MainCamera.transform.rotation = Quaternion.Euler(0,180,0);
             MainCamera.transform.localPosition = new Vector3(0.0f,0.08f,0.3f);
@@ -105,6 +152,8 @@ public class PlayerController : MonoBehaviour
             Vector3 height = new Vector3(0, 4, 0);
             rb.AddForce(fuerzaPutiaso * collision.contacts[0].normal + height, ForceMode.Impulse);
             x = 0;
+            play = false;
+            aplastado = true;
         }
     }
 
