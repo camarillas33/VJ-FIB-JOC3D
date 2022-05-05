@@ -40,16 +40,19 @@ public class PlayerController : MonoBehaviour
             if(freeMovement) {
                 x = Input.GetAxis("Horizontal");
                 y = Input.GetAxis("Vertical");
+                // Moviment personatge
+                transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
+                transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
             }
             else {
                 if(Input.GetKey(KeyCode.A)) y = 1;
                 else y = 0;
                 if(Input.GetKeyUp(KeyCode.A)) x = 0;
+                // Moviment personatge
+                transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
+                transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
             }
-            // Moviment personatge
-            transform.Rotate(0,x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
             
-            transform.Translate(0, 0 ,y * runSpeed * Time.deltaTime); // Mou el personatge
             
 
         }
