@@ -15,9 +15,10 @@ public class PlayerController : MonoBehaviour
     public bool freeMovement = false;
     private Vector3 initialPosition, initialScale, initialCameraPosition;
     private Quaternion initialRotation, initialCameraRotation;
-    private float x, y;
+    private float x, y, rotate;
     private bool collisioned = false;
     private bool finished = false;
+    private bool trepando = false;
     public Rigidbody rb;
 
     void Start()
@@ -38,22 +39,38 @@ public class PlayerController : MonoBehaviour
         // Obté cap a on es mou el personatge
         if(play) {
             if(freeMovement) {
-                x = Input.GetAxis("Horizontal");
-                y = Input.GetAxis("Vertical");
-                // Moviment personatge
-                transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
-                transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
+                if(trepando)
+                {
+                    if (Input.GetKey(KeyCode.M)) y = 1;
+                    else y = 0;
+                    transform.Translate(0, y * runSpeed * Time.deltaTime,0); // Mou el personatge
+                }
+                else
+                {
+                    x = Input.GetAxis("Horizontal");
+                    y = Input.GetAxis("Vertical");
+                    if (Input.GetKey(KeyCode.M)) y = 1;
+                    // Moviment personatge
+                    transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
+                    transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
+                }
             }
-            else {
-                if(Input.GetKey(KeyCode.A)) y = 1;
+            else
+            {
+                if (Input.GetKey(KeyCode.B))
+                {
+                    y = 1;
+                    x = rotate;
+                    transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
+                    transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime); // Mou el personatge
+                }
                 else y = 0;
-                if(Input.GetKeyUp(KeyCode.A)) x = 0;
+                if (Input.GetKeyUp(KeyCode.B)) x = 0;
                 // Moviment personatge
-                transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
-                transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
+
             }
-            
-            
+
+
 
         }
 
@@ -105,14 +122,6 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Respawn") {
             respawn();
         }
-        else if(other.tag == "TurnRight") {
-            Debug.Log("Triggered by Turn");
-            x = 1;
-        }
-        else if(other.tag == "StopTurn") {
-            Debug.Log("Triggered by StopTurn");
-            x = 0;
-        }
         else if(other.tag == "Aplastador")
         {
 
@@ -129,6 +138,46 @@ public class PlayerController : MonoBehaviour
             colisionTime = 0;
             play = false;
         }
+        else if(other.tag == "Maria")
+        {
+            Debug.Log("pillo el petardo");
+            trepando = true;
+            rb.useGravity = false;
+        }
+        else if (other.tag == "TurnRight")
+        {
+            Debug.Log("Triggered by Turn");
+            rotate = 1;
+        }
+        else if (other.tag == "TurnLeft")
+        {
+            Debug.Log("Triggered by Turn");
+            rotate = -1;
+        }
+        else if (other.tag == "StopTurn0")
+        {
+            Debug.Log("Triggered by StopTurn");
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            rotate = 0;
+        }
+        else if (other.tag == "StopTurn90")
+        {
+            Debug.Log("Triggered by StopTurn");
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+            rotate = 0;
+        }
+        else if (other.tag == "StopTurn180")
+        {
+            Debug.Log("Triggered by StopTurn");
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            rotate = 0;
+        }
+        else if (other.tag == "StopTurn270")
+        {
+            Debug.Log("Triggered by StopTurn");
+            transform.rotation = Quaternion.Euler(0, 270, 0);
+            rotate = 0;
+        }
 
     }
 
@@ -143,6 +192,14 @@ public class PlayerController : MonoBehaviour
             MainCamera.transform.rotation = Quaternion.Euler(0,180,0);
             MainCamera.transform.localPosition = new Vector3(0.0f,0.08f,0.3f);
         }
+        else if (other.tag == "Maria")
+        {
+            Debug.Log("suelto el porro"); 
+            trepando = false;
+            transform.Translate(0,0, 5 * runSpeed * Time.deltaTime); // Mou el personatge
+            rb.useGravity = true;
+        }
+
     }
 
         void OnCollisionEnter(Collision collision) {
