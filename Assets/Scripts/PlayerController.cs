@@ -38,22 +38,22 @@ public class PlayerController : MonoBehaviour
     {
         // Obté cap a on es mou el personatge
         if(play) {
-            if(freeMovement) {
-                if(trepando)
-                {
-                    if (Input.GetKey(KeyCode.M)) y = 1;
-                    else y = 0;
-                    transform.Translate(0, y * runSpeed * Time.deltaTime,0); // Mou el personatge
-                }
-                else
-                {
+            if (trepando)
+            {
+                if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.B)) y = 1;
+                else y = 0;
+                transform.Translate(0, y * runSpeed * Time.deltaTime, 0); // Mou el personatge
+            }
+            else  if (freeMovement) {
+                
+                
                     x = Input.GetAxis("Horizontal");
                     y = Input.GetAxis("Vertical");
                     if (Input.GetKey(KeyCode.M)) y = 1;
                     // Moviment personatge
                     transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
                     transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
-                }
+                
             }
             else
             {
@@ -91,9 +91,10 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetFloat("speedX", x);
-            animator.SetFloat("speedY", y);
-            animator.SetBool("col", collisioned); 
-            animator.SetBool("end", finished);
+        animator.SetFloat("speedY", y);
+        animator.SetBool("col", collisioned); 
+        animator.SetBool("end", finished);
+        animator.SetBool("escalador", trepando);
 
     } 
 
@@ -114,6 +115,7 @@ public class PlayerController : MonoBehaviour
         x = 0;
         collisioned = false;
         play = true;
+        rotate = 0;
 
     }
 
