@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class ObstacleController : MonoBehaviour
 {
-    public float angle = 40;
-
+    
+    public float speed = 25;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +17,7 @@ public class ObstacleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0.0f, angle*Time.deltaTime, 0.0f);
+        float dist = Mathf.Sin(2*Time.time);
+        transform.Translate(0.0f, 0.0f, dist*speed*Time.deltaTime);
     }
 }

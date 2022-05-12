@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool collisioned = false;
     private bool finished = false;
     private bool trepando = false;
+    private float initialCameraFOV;
     public Rigidbody rb;
 
     void Start()
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
         MainCamera = GetComponentInChildren<Camera>();
         initialCameraPosition = MainCamera.transform.localPosition;
         initialCameraRotation = MainCamera.transform.localRotation;
+        initialCameraFOV = MainCamera.fieldOfView;
         colisionTime = 0;
     }
 
@@ -57,16 +59,33 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (Input.GetKey(KeyCode.B))
+                if(gameObject.tag == "JuanCarlosI")
                 {
-                    y = 1;
-                    x = rotate;
-                    transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
-                    transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime); // Mou el personatge
+                    if (Input.GetKey(KeyCode.B))
+                    {
+                        y = 1;
+                        x = rotate;
+                        transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
+                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime); // Mou el personatge
+                    }
+                    else y = 0;
+                    if (Input.GetKeyUp(KeyCode.B)) x = 0;
+                    // Moviment personatge
                 }
-                else y = 0;
-                if (Input.GetKeyUp(KeyCode.B)) x = 0;
-                // Moviment personatge
+                else
+                {
+                    if (Input.GetKey(KeyCode.M))
+                    {
+                        y = 1;
+                        x = rotate;
+                        transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
+                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime); // Mou el personatge
+                    }
+                    else y = 0;
+                    if (Input.GetKeyUp(KeyCode.M)) x = 0;
+                    // Moviment personatge
+                }
+
 
             }
 
@@ -112,6 +131,7 @@ public class PlayerController : MonoBehaviour
         transform.position = initialPosition;
         transform.rotation = initialRotation;
         transform.localScale = initialScale;
+        MainCamera.fieldOfView = initialCameraFOV;
         x = 0;
         collisioned = false;
         play = true;
@@ -143,17 +163,33 @@ public class PlayerController : MonoBehaviour
         else if(other.tag == "Maria")
         {
             Debug.Log("pillo el petardo");
+            MainCamera.fieldOfView = 80;
             trepando = true;
             rb.useGravity = false;
         }
         else if (other.tag == "TurnRight")
         {
             Debug.Log("Triggered by Turn");
+            
+            if (gameObject.tag == "JoseJuan") {
+                rotationSpeed = 120;
+            } else
+            {
+                rotationSpeed = 72;
+            }
             rotate = 1;
         }
         else if (other.tag == "TurnLeft")
         {
             Debug.Log("Triggered by Turn");
+            if (gameObject.tag == "JoseJuan")
+            {
+                rotationSpeed = 67;
+            }
+            else
+            {
+                rotationSpeed = 110;
+            }
             rotate = -1;
         }
         else if (other.tag == "StopTurn0")
@@ -198,6 +234,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("suelto el porro"); 
             trepando = false;
+            MainCamera.fieldOfView = initialCameraFOV;
             transform.Translate(0,0, 5 * runSpeed * Time.deltaTime); // Mou el personatge
             rb.useGravity = true;
         }
