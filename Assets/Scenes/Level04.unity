@@ -432,7 +432,8 @@ PrefabInstance:
       propertyPath: player02
       value: 
       objectReference: {fileID: 1766448042}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2736857624431467962, guid: 622cff46e4015be62b4dcc6a8b97f8f6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 622cff46e4015be62b4dcc6a8b97f8f6, type: 3}
 --- !u!1001 &716756347
 PrefabInstance:
@@ -1683,6 +1684,27 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &1477106571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2736857624431467960, guid: 622cff46e4015be62b4dcc6a8b97f8f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 419394463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1477106574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477106571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fcb4b504f4d2b28ca63339f5db6353b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  player01: {fileID: 1078429935}
+  player02: {fileID: 1766448042}
 --- !u!1 &1544730420
 GameObject:
   m_ObjectHideFlags: 0
