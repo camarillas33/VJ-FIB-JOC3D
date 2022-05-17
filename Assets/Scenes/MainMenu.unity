@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571343, b: 0.30692208, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -299.27838, y: 0, z: -299.55078, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -754,12 +754,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 981332327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fcb4b504f4d2b28ca63339f5db6353b, type: 3}
+  m_Script: {fileID: 11500000, guid: fd5e05ae8d55d41419a93c21f76f72b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  player01: {fileID: 0}
-  player02: {fileID: 0}
+  player01: {fileID: 1073962079}
+  player02: {fileID: 1869076618}
+--- !u!114 &981332329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981332327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bfd996269818c24fa40cf6b45c52e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: 0
+  play: {fileID: 571117319}
+  instructions: {fileID: 121717660}
+  credits: {fileID: 1131806407}
 --- !u!1001 &1073962077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1207,7 +1223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

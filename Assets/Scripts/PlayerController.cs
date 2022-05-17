@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private bool aplastado = false;
     private float colisionTime;
     private bool play;
+    public float maxSlopeAngle;
+    private RaycastHit slopeHit;
     public Camera MainCamera;
     public bool freeMovement = false;
     private Vector3 initialPosition, initialScale, initialCameraPosition;
@@ -21,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private bool trepando = false;
     private float initialCameraFOV;
     public Rigidbody rb;
+    private Vector3 moveDirection;
+    public float playerHeight;
+
 
     void Start()
     {
@@ -38,8 +43,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        x = Input.GetAxis("Horizontal");
         // Obté cap a on es mou el personatge
-        if(play) {
+        if (play) {
             if (trepando)
             {
                 if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.B)) y = 1;
@@ -84,6 +90,13 @@ public class PlayerController : MonoBehaviour
                     else y = 0;
                     if (Input.GetKeyUp(KeyCode.M)) x = 0;
                     // Moviment personatge
+                }
+                if (OnSlope())
+                {
+                    rb.AddForce(GetSlopeMoveDirection() * runSpeed * 20f, ForceMode.Force);
+
+                    if (rb.velocity.y > 0)
+                        rb.AddForce(Vector3.down * 80f, ForceMode.Force);
                 }
 
 
@@ -146,19 +159,20 @@ public class PlayerController : MonoBehaviour
         }
         else if(other.tag == "Aplastador")
         {
-
+            play = false;
             transform.localScale = new Vector3(initialScale.x, 5, initialScale.z * 1.5f);
             MainCamera.transform.localPosition = new Vector3(initialCameraPosition.x, initialCameraPosition.y + 0.5f, initialCameraPosition.z);
             aplastado = true;
             colisionTime = 0;
-            play = false;
+           
 
         }
         else if(other.tag == "Sierra")
         {
+            play = false;
             aplastado = true;
             colisionTime = 0;
-            play = false;
+            
         }
         else if(other.tag == "Maria")
         {
@@ -241,10 +255,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
-        void OnCollisionEnter(Collision collision) {
+    void OnCollisionEnter(Collision collision) {
         Collider c = collision.collider;
         Debug.Log(c.tag);
-        if (c.tag == "Putiaso")
+        if (c.tag == "Putiaso" || c.tag == "Barril")
         {
             collisioned = true;
             Debug.Log("Tremendo putiaso me has dado");
@@ -254,6 +268,22 @@ public class PlayerController : MonoBehaviour
             play = false;
             aplastado = true;
         }
+    }
+
+    private bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
+
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 
 }

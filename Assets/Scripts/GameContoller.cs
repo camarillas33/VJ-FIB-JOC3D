@@ -10,8 +10,7 @@ public class GameContoller : MonoBehaviour
 
     public GameObject player01;
     public GameObject player02;
-    //SceneManager.LoadScene("MainMenu"); 
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,36 +20,48 @@ public class GameContoller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Alpha1)) {
-            SceneManager.LoadScene("Level01");
-            mode = Mode.Game;
-        }
-        if(Input.GetKey(KeyCode.Alpha2)) {
-            SceneManager.LoadScene("Level02");
-            mode = Mode.Game;
-        }
-        if(Input.GetKey(KeyCode.Alpha3)) {
-            SceneManager.LoadScene("Level03");
-            mode = Mode.Game;
-        }
-        if(Input.GetKey(KeyCode.Alpha4)) {
-            SceneManager.LoadScene("Level04");
-            mode = Mode.Game;
-        }
-        if(Input.GetKey(KeyCode.Alpha5)) {
-            SceneManager.LoadScene("Level05");
-            mode = Mode.Game;
-        }
-        if (Input.GetKey(KeyCode.Escape)) {
-            SceneManager.LoadScene("MainMenu");
-            mode = Mode.Menu;
-        }
+        keyPress();
         if(mode != Mode.Game) {
             player01.GetComponent<PlayerController>().setPlaying(false);
             player02.GetComponent<PlayerController>().setPlaying(false);
         } else if(mode == Mode.Game) {
             player01.GetComponent<PlayerController>().setPlaying(true);
             player02.GetComponent<PlayerController>().setPlaying(true);
+        }
+    }
+
+    private void keyPress() {
+        if(Input.GetKey(KeyCode.Alpha1)) {
+            SceneManager.LoadScene("Level01");
+            mode = Mode.Game;
+        }
+        else if(Input.GetKey(KeyCode.Alpha2)) {
+            SceneManager.LoadScene("Level02");
+            mode = Mode.Game;
+        }
+        else if(Input.GetKey(KeyCode.Alpha3)) {
+            SceneManager.LoadScene("Level03");
+            mode = Mode.Game;
+        }
+        else if(Input.GetKey(KeyCode.Alpha4)) {
+            SceneManager.LoadScene("Level04");
+            mode = Mode.Game;
+        }
+        else if(Input.GetKey(KeyCode.Alpha5)) {
+            SceneManager.LoadScene("Level05");
+            mode = Mode.Game;
+        }
+        else if (Input.GetKey(KeyCode.Escape)) {
+            SceneManager.LoadScene("MainMenu");
+            mode = Mode.Menu;
+        } 
+        else if (Input.GetKeyDown(KeyCode.UpArrow) && mode == Mode.Menu) {
+            GetComponent<MenuController>().changeModeUp();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) && mode == Mode.Menu) {
+            GetComponent<MenuController>().changeModeDown();
+        }
+        else if (Input.GetKey(KeyCode.DownArrow)) {
         }
     }
 }

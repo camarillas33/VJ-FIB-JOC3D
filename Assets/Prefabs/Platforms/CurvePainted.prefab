@@ -313,6 +313,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurnZone
       objectReference: {fileID: 0}
+    - target: {fileID: 371330763948611949, guid: 8423e15148d45de928605bac0dea037f,
+        type: 3}
+      propertyPath: m_TagString
+      value: TurnRight
+      objectReference: {fileID: 0}
     - target: {fileID: 371330763948611950, guid: 8423e15148d45de928605bac0dea037f,
         type: 3}
       propertyPath: m_Enabled
@@ -338,6 +343,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StopZone
       objectReference: {fileID: 0}
+    - target: {fileID: 260841645625561361, guid: f99fa3779191b696c8f0a6fbcc1cbe9a,
+        type: 3}
+      propertyPath: m_TagString
+      value: StopTurn90
+      objectReference: {fileID: 0}
     - target: {fileID: 386167653202621244, guid: f99fa3779191b696c8f0a6fbcc1cbe9a,
         type: 3}
       propertyPath: m_RootOrder
@@ -361,17 +371,17 @@ PrefabInstance:
     - target: {fileID: 386167653202621244, guid: f99fa3779191b696c8f0a6fbcc1cbe9a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0116
+      value: 0.0115
       objectReference: {fileID: 0}
     - target: {fileID: 386167653202621244, guid: f99fa3779191b696c8f0a6fbcc1cbe9a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0029
+      value: 0.00278
       objectReference: {fileID: 0}
     - target: {fileID: 386167653202621244, guid: f99fa3779191b696c8f0a6fbcc1cbe9a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0101
+      value: -0.085
       objectReference: {fileID: 0}
     - target: {fileID: 386167653202621244, guid: f99fa3779191b696c8f0a6fbcc1cbe9a,
         type: 3}
