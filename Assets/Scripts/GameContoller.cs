@@ -14,20 +14,23 @@ public class GameContoller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (mode != Mode.Game)
+        {
+            player01.GetComponent<PlayerController>().setPlaying(false);
+            player02.GetComponent<PlayerController>().setPlaying(false);
+        }
+        else if (mode == Mode.Game)
+        {
+            player01.GetComponent<PlayerController>().setPlaying(true);
+            player02.GetComponent<PlayerController>().setPlaying(true);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         keyPress();
-        if(mode != Mode.Game) {
-            player01.GetComponent<PlayerController>().setPlaying(false);
-            player02.GetComponent<PlayerController>().setPlaying(false);
-        } else if(mode == Mode.Game) {
-            player01.GetComponent<PlayerController>().setPlaying(true);
-            player02.GetComponent<PlayerController>().setPlaying(true);
-        }
+        
     }
 
     private void keyPress() {

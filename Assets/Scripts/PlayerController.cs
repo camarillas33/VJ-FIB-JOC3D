@@ -45,27 +45,29 @@ public class PlayerController : MonoBehaviour
     {
         x = Input.GetAxis("Horizontal");
         // Obté cap a on es mou el personatge
-        if (play) {
+        if (play)
+        {
             if (trepando)
             {
                 if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.B)) y = 1;
                 else y = 0;
                 transform.Translate(0, y * runSpeed * Time.deltaTime, 0); // Mou el personatge
             }
-            else  if (freeMovement) {
-                
-                
-                    x = Input.GetAxis("Horizontal");
-                    y = Input.GetAxis("Vertical");
-                    if (Input.GetKey(KeyCode.M)) y = 1;
-                    // Moviment personatge
-                    transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
-                    transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
-                
+            else if (freeMovement)
+            {
+
+
+                x = Input.GetAxis("Horizontal");
+                y = Input.GetAxis("Vertical");
+                if (Input.GetKey(KeyCode.M)) y = 1;
+                // Moviment personatge
+                transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
+                transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
+
             }
             else
             {
-                if(gameObject.tag == "JuanCarlosI")
+                if (gameObject.tag == "JuanCarlosI")
                 {
                     if (Input.GetKey(KeyCode.B))
                     {
@@ -124,17 +126,19 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("speedX", x);
         animator.SetFloat("speedY", y);
-        animator.SetBool("col", collisioned); 
+        animator.SetBool("col", collisioned);
         animator.SetBool("end", finished);
         animator.SetBool("escalador", trepando);
 
-    } 
+    }
 
-    public void setPlaying(bool b) {
+    public void setPlaying(bool b)
+    {
         play = b;
-    }  
+    }
 
-    public void changePlaying() {
+    public void changePlaying()
+    {
         play = !play;
     }
 
@@ -154,27 +158,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Respawn") {
+        if (other.tag == "Respawn")
+        {
             respawn();
         }
-        else if(other.tag == "Aplastador")
+        else if (other.tag == "Aplastador")
         {
             play = false;
             transform.localScale = new Vector3(initialScale.x, 5, initialScale.z * 1.5f);
             MainCamera.transform.localPosition = new Vector3(initialCameraPosition.x, initialCameraPosition.y + 0.5f, initialCameraPosition.z);
             aplastado = true;
             colisionTime = 0;
-           
+
 
         }
-        else if(other.tag == "Sierra")
+        else if (other.tag == "Sierra")
         {
             play = false;
             aplastado = true;
             colisionTime = 0;
-            
+
         }
-        else if(other.tag == "Maria")
+        else if (other.tag == "Maria")
         {
             Debug.Log("pillo el petardo");
             MainCamera.fieldOfView = 80;
@@ -184,10 +189,12 @@ public class PlayerController : MonoBehaviour
         else if (other.tag == "TurnRight")
         {
             Debug.Log("Triggered by Turn");
-            
-            if (gameObject.tag == "JoseJuan") {
+
+            if (gameObject.tag == "JoseJuan")
+            {
                 rotationSpeed = 120;
-            } else
+            }
+            else
             {
                 rotationSpeed = 72;
             }
@@ -230,32 +237,51 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 270, 0);
             rotate = 0;
         }
+        else if (other.tag == "Checkpoint")
+        {
+            initialPosition = other.transform.position;
+        }
+        else if (other.tag == "SaltoFresco")
+        {
+            rb.AddForce(new Vector3(0, fuerzaPutiaso, 0), ForceMode.Impulse);
+        }
 
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Finish")
-        { 
+        {
             finished = true;
             play = false;
-            
-        
-            MainCamera.transform.rotation = Quaternion.Euler(0,180,0);
-            MainCamera.transform.localPosition = new Vector3(0.0f,0.08f,0.3f);
+
+            if (gameObject.tag == "JuanCarlosI")
+            {
+                gameObject.GetComponent<WinController>().winPlayer01();
+                gameObject.transform.parent.GetChild(1).GetComponent<PlayerController>().setPlaying(false);
+            }
+            if (gameObject.tag == "JoseJuan")
+            {
+                gameObject.GetComponent<WinController>().winPlayer02();
+                gameObject.transform.parent.GetChild(1).GetComponent<PlayerController>().setPlaying(false);
+            }
+
+            MainCamera.transform.rotation = Quaternion.Euler(0, 180, 0);
+            MainCamera.transform.localPosition = new Vector3(0.0f, 0.08f, 0.3f);
         }
         else if (other.tag == "Maria")
         {
-            Debug.Log("suelto el porro"); 
+            Debug.Log("suelto el porro");
             trepando = false;
             MainCamera.fieldOfView = initialCameraFOV;
-            transform.Translate(0,0, 5 * runSpeed * Time.deltaTime); // Mou el personatge
+            transform.Translate(0, 0, 5 * runSpeed * Time.deltaTime); // Mou el personatge
             rb.useGravity = true;
         }
 
     }
 
-    void OnCollisionEnter(Collision collision) {
+    void OnCollisionEnter(Collision collision)
+    {
         Collider c = collision.collider;
         Debug.Log(c.tag);
         if (c.tag == "Putiaso" || c.tag == "Barril")
