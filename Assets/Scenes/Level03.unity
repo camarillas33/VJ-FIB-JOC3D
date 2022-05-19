@@ -1658,7 +1658,7 @@ MonoBehaviour:
   respawnTime: 5
   initX: 3.74
   initY: 14.84
-  initZ: 5.51
+  initZ: 9.56
   initX2: 5.85
   initY2: 14.84
   initZ2: 9.56
@@ -2708,12 +2708,12 @@ PrefabInstance:
     - target: {fileID: 3985142053381611837, guid: 3495f814b831afd408454fa47e4c1612,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.4258084
+      value: 6.37
       objectReference: {fileID: 0}
     - target: {fileID: 3985142053381611837, guid: 3495f814b831afd408454fa47e4c1612,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8875177
+      value: -2.86
       objectReference: {fileID: 0}
     - target: {fileID: 3985142053381611837, guid: 3495f814b831afd408454fa47e4c1612,
         type: 3}

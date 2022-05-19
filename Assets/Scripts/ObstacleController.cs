@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 
+
 public class ObstacleController : MonoBehaviour
 {
     
@@ -23,6 +24,13 @@ public class ObstacleController : MonoBehaviour
         if(gameObject.tag == "Barril")
         {
             if (transform.position.y < 0) Destroy(this.gameObject);
+        }
+        else if (gameObject.tag == "Fuegardo")
+        {
+            Debug.Log("Reboto");
+            float dist = Mathf.Sin( Time.time);
+            if (dist < 0) dist = 0;
+            transform.localScale = new Vector3(dist * speed * Time.deltaTime, dist * speed * Time.deltaTime, dist * speed * Time.deltaTime);
         }
         else
         {

@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     private Vector3 moveDirection;
     public float playerHeight;
-
+    private float factor = 0;
 
     void Start()
     {
@@ -43,23 +43,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        x = Input.GetAxis("Horizontal");
+        //x = Input.GetAxis("Horizontal");
         // Obté cap a on es mou el personatge
         if (play)
         {
             if (trepando)
             {
-                if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.B)) y = 1;
+                if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) y = 1;
                 else y = 0;
                 transform.Translate(0, y * runSpeed * Time.deltaTime, 0); // Mou el personatge
             }
             else if (freeMovement)
             {
-
-
                 x = Input.GetAxis("Horizontal");
                 y = Input.GetAxis("Vertical");
-                if (Input.GetKey(KeyCode.M)) y = 1;
+                if (Input.GetKey(KeyCode.UpArrow)) y = 1;
                 // Moviment personatge
                 transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge            
                 transform.Translate(0, 0, y * runSpeed * Time.deltaTime); // Mou el personatge
@@ -69,28 +67,54 @@ public class PlayerController : MonoBehaviour
             {
                 if (gameObject.tag == "JuanCarlosI")
                 {
-                    if (Input.GetKey(KeyCode.B))
+                    //if (Input.GetKeyDown(KeyCode.W)) factor = 0;
+                    if (Input.GetKey(KeyCode.W))
                     {
+                        factor += 0.05f;
                         y = 1;
                         x = rotate;
+                        if (factor > 1) factor = 1;
                         transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
-                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime); // Mou el personatge
+                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
                     }
-                    else y = 0;
-                    if (Input.GetKeyUp(KeyCode.B)) x = 0;
+                    else
+                    {
+                        y = 1;
+                        factor -= 0.05f;
+                        if (factor < 0) factor = 0;
+                        x = rotate;
+                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
+                        transform.Rotate(0, x * rotationSpeed * Time.deltaTime * factor, 0); // Rota el personatge
+                    }
+                    if (Input.GetKeyUp(KeyCode.W))
+                    {
+                        x = 0;
+                    }
+
                     // Moviment personatge
                 }
                 else
                 {
-                    if (Input.GetKey(KeyCode.M))
+                    if (Input.GetKeyDown(KeyCode.UpArrow)) factor = 0;
+                    if (Input.GetKey(KeyCode.UpArrow))
                     {
                         y = 1;
+                        factor += 0.05f;
                         x = rotate;
+                        if (factor > 1) factor = 1;
                         transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
-                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime); // Mou el personatge
+                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
                     }
-                    else y = 0;
-                    if (Input.GetKeyUp(KeyCode.M)) x = 0;
+                    else
+                    {
+                        factor -= 0.05f;
+                        if (factor < 0) factor = 0;
+                        x = rotate;
+                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
+                        transform.Rotate(0, x * rotationSpeed * Time.deltaTime * factor, 0); // Rota el personatge
+                        y = 1;
+                    }
+                    if (Input.GetKeyUp(KeyCode.UpArrow)) x = 0;
                     // Moviment personatge
                 }
                 if (OnSlope())
@@ -124,8 +148,8 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        animator.SetFloat("speedX", x);
-        animator.SetFloat("speedY", y);
+        animator.SetFloat("speedX", x * factor);
+        animator.SetFloat("speedY", y * factor);
         animator.SetBool("col", collisioned);
         animator.SetBool("end", finished);
         animator.SetBool("escalador", trepando);
@@ -243,7 +267,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.tag == "SaltoFresco")
         {
-            rb.AddForce(new Vector3(0, fuerzaPutiaso, 0), ForceMode.Impulse);
+            rb.AddForce(new Vector3(0, fuerzaPutiaso, fuerzaPutiaso / 2), ForceMode.Impulse);
+        }
+        else if (other.tag == "Fuegardo")
+        {
+            Debug.Log("me quemo el ojete");
         }
 
     }
