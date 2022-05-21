@@ -7,7 +7,7 @@ public class GameContoller : MonoBehaviour
 {
     public enum Mode {Menu, Options, Game};
     public Mode mode;
-
+    public int scene;
     public GameObject player01;
     public GameObject player02;
     
@@ -66,10 +66,25 @@ public class GameContoller : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.Return))
         {
-            int button = GetComponent<MenuController>().getButton();
-            if (button == 0) SceneManager.LoadScene("Level01");
-            else if (button == 1) SceneManager.LoadScene("InstructionsMenu");
-            else SceneManager.LoadScene("Credits");
+            if (mode == Mode.Menu)
+            {
+                int button = GetComponent<MenuController>().getButton();
+                if (button == 0) SceneManager.LoadScene("Level01");
+                else if (button == 1) SceneManager.LoadScene("InstructionsMenu");
+                else SceneManager.LoadScene("Credits");
+            }
+            else if (mode == Mode.Game)
+            {
+                if (player01.GetComponent<PlayerController>().hasFinished() ||
+                   player02.GetComponent<PlayerController>().hasFinished())
+                {
+                    if (scene == 1) SceneManager.LoadScene("Level02");
+                    if (scene == 2) SceneManager.LoadScene("Level03");
+                    if (scene == 3) SceneManager.LoadScene("Level04");
+                    if (scene == 4) SceneManager.LoadScene("Level05");
+                    if (scene == 5) SceneManager.LoadScene("Credits");
+                }
+            }
         }
     }
 }

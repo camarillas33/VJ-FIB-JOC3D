@@ -10,11 +10,13 @@ public class WinController : MonoBehaviour
     public TMP_Text loser01;
     public TMP_Text winner02;
     public TMP_Text loser02;
+    public TMP_Text next;
 
     private TextMeshProUGUI textWinner01;
     private TextMeshProUGUI textLoser01;
     private TextMeshProUGUI textWinner02;
     private TextMeshProUGUI textLoser02;
+    private TextMeshProUGUI textNext;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,20 +24,27 @@ public class WinController : MonoBehaviour
         textLoser01 = loser01.GetComponent<TextMeshProUGUI>();
         textWinner02 = winner02.GetComponent<TextMeshProUGUI>();
         textLoser02 = loser02.GetComponent<TextMeshProUGUI>();
+        textNext = next.GetComponent<TextMeshProUGUI>();
 
         textWinner01.gameObject.SetActive(false);
         textLoser01.gameObject.SetActive(false);
         textWinner02.gameObject.SetActive(false);
         textLoser02.gameObject.SetActive(false);
+        textNext.gameObject.SetActive(false);
     }
 
-    public void winPlayer01() {
+    public void winPlayer01()
+    {
         textWinner01.gameObject.SetActive(true);
         textLoser02.gameObject.SetActive(true);
+        textNext.gameObject.SetActive(true);
     }
 
-    public void winPlayer02() {
+    public void winPlayer02()
+    {
         textWinner02.gameObject.SetActive(true);
         textLoser01.gameObject.SetActive(true);
+        textNext.gameObject.SetActive(true);
+
     }
 }

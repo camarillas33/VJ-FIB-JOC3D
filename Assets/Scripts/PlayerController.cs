@@ -28,11 +28,13 @@ public class PlayerController : MonoBehaviour
     private float factor = 0;
     public ParticleSystem polvito;
     public ParticleSystem blood;
+    public ParticleSystem fueguito;
 
     void Start()
     {
         blood.Stop();
         polvito.Stop();
+        fueguito.Stop();
         rb = GetComponent<Rigidbody>();
         initialPosition = transform.position;
         initialRotation = transform.rotation;
@@ -188,6 +190,7 @@ public class PlayerController : MonoBehaviour
     {
         polvito.Stop();
         blood.Stop();
+        fueguito.Stop();
         rb.velocity = Vector3.zero;
         transform.position = initialPosition;
         transform.rotation = initialRotation;
@@ -296,7 +299,14 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.tag == "Fuegardo")
         {
+            blood.Play();
+            fueguito.Play();
+            polvito.Play();
+            rb.AddForce(new Vector3(0, fuerzaPutiaso, 0), ForceMode.Impulse);
             Debug.Log("me quemo el ojete");
+            collisioned = true; 
+            play = false;
+            aplastado = true;
         }
 
     }
@@ -309,6 +319,7 @@ public class PlayerController : MonoBehaviour
             play = false;
             polvito.Stop();
             blood.Stop();
+            fueguito.Stop();
             if (gameObject.tag == "JuanCarlosI")
             {
                 gameObject.GetComponent<WinController>().winPlayer01();
@@ -366,6 +377,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+    public bool hasFinished()
+    {
+        return finished;
     }
 
 }
