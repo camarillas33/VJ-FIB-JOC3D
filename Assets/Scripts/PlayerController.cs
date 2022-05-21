@@ -317,10 +317,11 @@ public class PlayerController : MonoBehaviour
             if (gameObject.tag == "JoseJuan")
             {
                 gameObject.GetComponent<WinController>().winPlayer02();
-                gameObject.transform.parent.GetChild(1).GetComponent<PlayerController>().setPlaying(false);
+                gameObject.transform.parent.GetChild(0).GetComponent<PlayerController>().setPlaying(false);
             }
 
             MainCamera.transform.rotation = Quaternion.Euler(0, 180, 0);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
             MainCamera.transform.localPosition = new Vector3(0.0f, 0.08f, 0.3f);
         }
         else if (other.tag == "Maria")
