@@ -64,7 +64,12 @@ public class GameContoller : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow) && mode == Mode.Menu) {
             GetComponent<MenuController>().changeModeDown();
         }
-        else if (Input.GetKey(KeyCode.DownArrow)) {
+        else if (Input.GetKey(KeyCode.Return))
+        {
+            int button = GetComponent<MenuController>().getButton();
+            if (button == 0) SceneManager.LoadScene("Level01");
+            else if (button == 1) SceneManager.LoadScene("InstructionsMenu");
+            else SceneManager.LoadScene("Credits");
         }
     }
 }

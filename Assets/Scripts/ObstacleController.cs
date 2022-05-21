@@ -10,6 +10,7 @@ public class ObstacleController : MonoBehaviour
     
     public float speed = 25;
     public float fuerzaRebote = 40;
+    private float rotation = 0;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,7 @@ public class ObstacleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        rotation += 1;
         if(gameObject.tag == "Barril")
         {
             if (transform.position.y < 0) Destroy(this.gameObject);
@@ -31,6 +32,11 @@ public class ObstacleController : MonoBehaviour
             float dist = Mathf.Sin( Time.time);
             if (dist < 0) dist = 0;
             transform.localScale = new Vector3(dist * speed * Time.deltaTime, dist * speed * Time.deltaTime, dist * speed * Time.deltaTime);
+        }
+        else if(gameObject.tag == "Toro")
+        {
+            transform.rotation = Quaternion.Euler(0f, rotation, 0f); 
+
         }
         else
         {

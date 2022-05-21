@@ -84,4 +84,12 @@ public class MenuController : MonoBehaviour
         else if(button == Button.Instruccions) button = Button.Credits;
         else if(button == Button.Credits) button = Button.Play;
     }
+
+    public int getButton()
+    {
+        if (button == Button.Play) return 0;
+        else if (button == Button.Instruccions) return 1;
+        else if (button == Button.Credits) return 2;
+        return 0;
+    }
 }

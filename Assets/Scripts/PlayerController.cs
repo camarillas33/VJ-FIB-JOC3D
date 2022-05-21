@@ -26,9 +26,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
     public float playerHeight;
     private float factor = 0;
+    public ParticleSystem polvito;
+    public ParticleSystem blood;
 
     void Start()
     {
+        blood.Stop();
+        polvito.Stop();
         rb = GetComponent<Rigidbody>();
         initialPosition = transform.position;
         initialRotation = transform.rotation;
@@ -44,7 +48,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //x = Input.GetAxis("Horizontal");
-        // Obté cap a on es mou el personatge
+        // ObtÃ© cap a on es mou el personatge
         if (play)
         {
             if (trepando)
@@ -71,20 +75,27 @@ public class PlayerController : MonoBehaviour
                     if (Input.GetKey(KeyCode.W))
                     {
                         factor += 0.05f;
+                        polvito.Play();
                         y = 1;
                         x = rotate;
+                        if (rotate == 1 || rotate == -1) factor = 1;
                         if (factor > 1) factor = 1;
                         transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
                         transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
+
                     }
                     else
                     {
+                        polvito.Stop();
                         y = 1;
                         factor -= 0.05f;
                         if (factor < 0) factor = 0;
                         x = rotate;
-                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
-                        transform.Rotate(0, x * rotationSpeed * Time.deltaTime * factor, 0); // Rota el personatge
+                        if (rotate == 0)
+                        {
+                            transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
+                            transform.Rotate(0, x * rotationSpeed * Time.deltaTime * factor, 0); // Rota el personatge
+                        }
                     }
                     if (Input.GetKeyUp(KeyCode.W))
                     {
@@ -98,20 +109,26 @@ public class PlayerController : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.UpArrow)) factor = 0;
                     if (Input.GetKey(KeyCode.UpArrow))
                     {
+                        polvito.Play();
                         y = 1;
                         factor += 0.05f;
                         x = rotate;
                         if (factor > 1) factor = 1;
+                        if (rotate == 1 || rotate == -1) factor = 1;
                         transform.Rotate(0, x * rotationSpeed * Time.deltaTime, 0); // Rota el personatge
                         transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
                     }
                     else
                     {
+                        polvito.Stop();
                         factor -= 0.05f;
                         if (factor < 0) factor = 0;
                         x = rotate;
-                        transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
-                        transform.Rotate(0, x * rotationSpeed * Time.deltaTime * factor, 0); // Rota el personatge
+                        if (rotate == 0)
+                        {
+                            transform.Translate(0, 0, 1 * runSpeed * Time.deltaTime * factor); // Mou el personatge
+                            transform.Rotate(0, x * rotationSpeed * Time.deltaTime * factor, 0); // Rota el personatge
+                        }
                         y = 1;
                     }
                     if (Input.GetKeyUp(KeyCode.UpArrow)) x = 0;
@@ -168,6 +185,8 @@ public class PlayerController : MonoBehaviour
 
     private void respawn()
     {
+        polvito.Stop();
+        blood.Stop();
         rb.velocity = Vector3.zero;
         transform.position = initialPosition;
         transform.rotation = initialRotation;
@@ -189,6 +208,7 @@ public class PlayerController : MonoBehaviour
         else if (other.tag == "Aplastador")
         {
             play = false;
+            blood.Play();
             transform.localScale = new Vector3(initialScale.x, 5, initialScale.z * 1.5f);
             MainCamera.transform.localPosition = new Vector3(initialCameraPosition.x, initialCameraPosition.y + 0.5f, initialCameraPosition.z);
             aplastado = true;
@@ -199,6 +219,7 @@ public class PlayerController : MonoBehaviour
         else if (other.tag == "Sierra")
         {
             play = false;
+            blood.Play();
             aplastado = true;
             colisionTime = 0;
 
@@ -242,6 +263,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Triggered by StopTurn");
             transform.rotation = Quaternion.Euler(0, 0, 0);
             rotate = 0;
+
         }
         else if (other.tag == "StopTurn90")
         {
@@ -282,7 +304,8 @@ public class PlayerController : MonoBehaviour
         {
             finished = true;
             play = false;
-
+            polvito.Stop();
+            blood.Stop();
             if (gameObject.tag == "JuanCarlosI")
             {
                 gameObject.GetComponent<WinController>().winPlayer01();
@@ -312,8 +335,9 @@ public class PlayerController : MonoBehaviour
     {
         Collider c = collision.collider;
         Debug.Log(c.tag);
-        if (c.tag == "Putiaso" || c.tag == "Barril")
+        if (c.tag == "Putiaso" || c.tag == "Barril" || c.tag == "Toro")
         {
+            blood.Play();
             collisioned = true;
             Debug.Log("Tremendo putiaso me has dado");
             Vector3 height = new Vector3(0, 4, 0);
