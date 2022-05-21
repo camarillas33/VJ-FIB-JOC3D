@@ -130,9 +130,10 @@ public class PlayerController : MonoBehaviour
                             transform.Rotate(0, x * rotationSpeed * Time.deltaTime * factor, 0); // Rota el personatge
                         }
                         y = 1;
+                        if (Input.GetKeyUp(KeyCode.UpArrow)) x = 0;
+                        // Moviment personatge
                     }
-                    if (Input.GetKeyUp(KeyCode.UpArrow)) x = 0;
-                    // Moviment personatge
+
                 }
                 if (OnSlope())
                 {
@@ -286,6 +287,8 @@ public class PlayerController : MonoBehaviour
         else if (other.tag == "Checkpoint")
         {
             initialPosition = other.transform.position;
+            initialRotation = transform.rotation;
+            fuerzaPutiaso = 12;
         }
         else if (other.tag == "SaltoFresco")
         {
