@@ -32,8 +32,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        blood.Stop();
+
         polvito.Stop();
+        blood.Stop();
         fueguito.Stop();
         rb = GetComponent<Rigidbody>();
         initialPosition = transform.position;

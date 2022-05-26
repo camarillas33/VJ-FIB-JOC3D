@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571343, b: 0.30692208, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15568,6 +15568,11 @@ PrefabInstance:
       propertyPath: polvito
       value: 
       objectReference: {fileID: 1358957333}
+    - target: {fileID: 4524703621596028629, guid: c67b27ca6fe432f819c5743b78b0456a,
+        type: 3}
+      propertyPath: fueguito
+      value: 
+      objectReference: {fileID: 2046117828}
     - target: {fileID: 4524703621596028629, guid: c67b27ca6fe432f819c5743b78b0456a,
         type: 3}
       propertyPath: runSpeed
@@ -61338,6 +61343,10 @@ PrefabInstance:
       propertyPath: polvito
       value: 
       objectReference: {fileID: 1803093181}
+    - target: {fileID: 1527614426, guid: 3cf5887c04b2e7e50ab76b5d37586a99, type: 3}
+      propertyPath: fueguito
+      value: 
+      objectReference: {fileID: 17879435}
     - target: {fileID: 1527614426, guid: 3cf5887c04b2e7e50ab76b5d37586a99, type: 3}
       propertyPath: runSpeed
       value: 6
