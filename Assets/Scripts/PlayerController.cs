@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private float x, y, rotate;
     private bool collisioned = false;
     private bool finished = false;
+    private bool flying = false;
     private bool trepando = false;
     private float initialCameraFOV;
     public Rigidbody rb;
@@ -56,9 +57,10 @@ public class PlayerController : MonoBehaviour
         {
             if (trepando)
             {
-                if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) y = 1;
+                if (Input.GetKey(KeyCode.UpArrow) && gameObject.tag == "JoseJuan") y = 1;
+                else if (Input.GetKey(KeyCode.W) && gameObject.tag == "JuanCarlosI") y = 1;
                 else y = 0;
-                transform.Translate(0, y * runSpeed * Time.deltaTime, 0); // Mou el personatge
+                transform.Translate(0, y * 4 * Time.deltaTime, 0); // Mou el personatge
             }
             else if (freeMovement)
             {
@@ -174,6 +176,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("col", collisioned);
         animator.SetBool("end", finished);
         animator.SetBool("escalador", trepando);
+        animator.SetBool("flying", flying);
 
     }
 
@@ -206,6 +209,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        flying = false;
         if (other.tag == "Respawn")
         {
             respawn();
@@ -296,6 +300,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.tag == "SaltoFresco")
         {
+            flying = true;
             rb.AddForce(new Vector3(0, fuerzaPutiaso, fuerzaPutiaso / 2), ForceMode.Impulse);
         }
         else if (other.tag == "Fuegardo")
@@ -349,6 +354,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        flying = false;
         Collider c = collision.collider;
         Debug.Log(c.tag);
         if (c.tag == "Putiaso" || c.tag == "Barril" || c.tag == "Toro")
