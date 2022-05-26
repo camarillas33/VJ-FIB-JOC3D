@@ -34,23 +34,30 @@ public class GameContoller : MonoBehaviour
     }
 
     private void keyPress() {
-        if(Input.GetKey(KeyCode.Alpha1)) {
+        GameObject gameObjectM = GameObject.Find("BackgroundMusic");
+        
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            if (gameObjectM != null) Destroy(gameObjectM);
             SceneManager.LoadScene("Level01");
             mode = Mode.Game;
         }
         else if(Input.GetKey(KeyCode.Alpha2)) {
+            if (gameObjectM != null) Destroy(gameObjectM);
             SceneManager.LoadScene("Level02");
             mode = Mode.Game;
         }
         else if(Input.GetKey(KeyCode.Alpha3)) {
+            if (gameObjectM != null) Destroy(gameObjectM);
             SceneManager.LoadScene("Level03");
             mode = Mode.Game;
         }
         else if(Input.GetKey(KeyCode.Alpha4)) {
+            if (gameObjectM != null) Destroy(gameObjectM);
             SceneManager.LoadScene("Level04");
             mode = Mode.Game;
         }
         else if(Input.GetKey(KeyCode.Alpha5)) {
+            if (gameObjectM != null) Destroy(gameObjectM);
             SceneManager.LoadScene("Level05");
             mode = Mode.Game;
         }
@@ -69,7 +76,11 @@ public class GameContoller : MonoBehaviour
             if (mode == Mode.Menu)
             {
                 int button = GetComponent<MenuController>().getButton();
-                if (button == 0) SceneManager.LoadScene("Level01");
+                if (button == 0)
+                {
+                    if (gameObjectM != null) Destroy(gameObjectM);
+                    SceneManager.LoadScene("Level01");
+                }
                 else if (button == 1) SceneManager.LoadScene("InstructionsMenu");
                 else SceneManager.LoadScene("Credits");
             }
