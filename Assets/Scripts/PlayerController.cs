@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     private bool aplastado = false;
     private float colisionTime;
-    private bool play;
+    private bool play, play2;
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     public Camera MainCamera;
@@ -30,10 +30,11 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem polvito;
     public ParticleSystem blood;
     public ParticleSystem fueguito;
+    private bool cry = false, hurt = false;
+    public bool godMode = false;
 
     void Start()
     {
-
         polvito.Stop();
         blood.Stop();
         fueguito.Stop();
@@ -52,9 +53,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //x = Input.GetAxis("Horizontal");
-        // ObtÃ© cap a on es mou el personatge
+        // Obt cap a on es mou el personatge
         if (play)
         {
+            if (Input.GetKey(KeyCode.G)) godMode = !godMode;
             if (trepando)
             {
                 if (Input.GetKey(KeyCode.UpArrow) && gameObject.tag == "JoseJuan") y = 1;
@@ -154,6 +156,11 @@ public class PlayerController : MonoBehaviour
 
 
         }
+        else {
+            polvito.Stop();
+            blood.Stop();
+            fueguito.Stop();
+        }
 
         if (aplastado)
         {
@@ -175,14 +182,17 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("speedY", y * factor);
         animator.SetBool("col", collisioned);
         animator.SetBool("end", finished);
+        animator.SetBool("cry", cry);
         animator.SetBool("escalador", trepando);
         animator.SetBool("flying", flying);
+        animator.SetBool("hurt",hurt);
 
     }
 
     public void setPlaying(bool b)
     {
         play = b;
+        play2 = b;
     }
 
     public void changePlaying()
@@ -202,7 +212,8 @@ public class PlayerController : MonoBehaviour
         MainCamera.fieldOfView = initialCameraFOV;
         x = 0;
         collisioned = false;
-        play = true;
+        hurt = false;
+        if(play2) play = true;
         rotate = 0;
 
     }
@@ -214,26 +225,7 @@ public class PlayerController : MonoBehaviour
         {
             respawn();
         }
-        else if (other.tag == "Aplastador")
-        {
-            play = false;
-            blood.Play();
-            transform.localScale = new Vector3(initialScale.x, 5, initialScale.z * 1.5f);
-            MainCamera.transform.localPosition = new Vector3(initialCameraPosition.x, initialCameraPosition.y + 0.5f, initialCameraPosition.z);
-            aplastado = true;
-            colisionTime = 0;
-
-
-        }
-        else if (other.tag == "Sierra")
-        {
-            play = false;
-            blood.Play();
-            aplastado = true;
-            colisionTime = 0;
-
-        }
-        else if (other.tag == "Maria")
+        if (other.tag == "Maria")
         {
             Debug.Log("pillo el petardo");
             MainCamera.fieldOfView = 80;
@@ -302,17 +294,42 @@ public class PlayerController : MonoBehaviour
         {
             flying = true;
             rb.AddForce(new Vector3(0, fuerzaPutiaso, fuerzaPutiaso / 2), ForceMode.Impulse);
-        }
-        else if (other.tag == "Fuegardo")
+        }        
+           
+        if(!godMode)
         {
-            blood.Play();
-            fueguito.Play();
-            polvito.Play();
-            rb.AddForce(new Vector3(0, fuerzaPutiaso, 0), ForceMode.Impulse);
-            Debug.Log("me quemo el ojete");
-            collisioned = true; 
-            play = false;
-            aplastado = true;
+            
+            if (other.tag == "Aplastador")
+            {
+                play = false;
+                blood.Play();
+                transform.localScale = new Vector3(initialScale.x, 5, initialScale.z * 1.5f);
+                MainCamera.transform.localPosition = new Vector3(initialCameraPosition.x, initialCameraPosition.y + 0.5f, initialCameraPosition.z);
+                aplastado = true;
+                colisionTime = 0;
+
+
+            }
+            else if (other.tag == "Sierra")
+            {
+                hurt = true;
+                play = false;
+                blood.Play();
+                aplastado = true;
+                colisionTime = 0;
+
+            }
+            else if (other.tag == "Fuegardo")
+            {
+                blood.Play();
+                fueguito.Play();
+                polvito.Play();
+                rb.AddForce(new Vector3(0, fuerzaPutiaso, 0), ForceMode.Impulse);
+                Debug.Log("me quemo el ojete");
+                collisioned = true;
+                play = false;
+                aplastado = true;
+            }
         }
 
     }
@@ -329,12 +346,16 @@ public class PlayerController : MonoBehaviour
             if (gameObject.tag == "JuanCarlosI")
             {
                 gameObject.GetComponent<WinController>().winPlayer01();
+                StartCoroutine(ExampleCoroutine());
                 gameObject.transform.parent.GetChild(1).GetComponent<PlayerController>().setPlaying(false);
+                gameObject.transform.parent.GetChild(1).GetComponent<PlayerController>().setCry(true);
             }
             if (gameObject.tag == "JoseJuan")
             {
                 gameObject.GetComponent<WinController>().winPlayer02();
+                StartCoroutine(ExampleCoroutine());
                 gameObject.transform.parent.GetChild(0).GetComponent<PlayerController>().setPlaying(false);
+                gameObject.transform.parent.GetChild(0).GetComponent<PlayerController>().setCry(true);
             }
 
             MainCamera.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -354,20 +375,24 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        flying = false;
-        Collider c = collision.collider;
-        Debug.Log(c.tag);
-        if (c.tag == "Putiaso" || c.tag == "Barril" || c.tag == "Toro")
+        if(!godMode)
         {
-            blood.Play();
-            collisioned = true;
-            Debug.Log("Tremendo putiaso me has dado");
-            Vector3 height = new Vector3(0, 4, 0);
-            rb.AddForce(fuerzaPutiaso * collision.contacts[0].normal + height, ForceMode.Impulse);
-            x = 0;
-            play = false;
-            aplastado = true;
+            flying = false;
+            Collider c = collision.collider;
+            Debug.Log(c.tag);
+            if (c.tag == "Putiaso" || c.tag == "Barril" || c.tag == "Toro")
+            {
+                blood.Play();
+                collisioned = true;
+                Debug.Log("Tremendo putiaso me has dado");
+                Vector3 height = new Vector3(0, 4, 0);
+                rb.AddForce(fuerzaPutiaso * collision.contacts[0].normal + height, ForceMode.Impulse);
+                x = 0;
+                play = false;
+                aplastado = true;
+            }
         }
+
     }
 
     private bool OnSlope()
@@ -389,6 +414,18 @@ public class PlayerController : MonoBehaviour
     public bool hasFinished()
     {
         return finished;
+    }
+
+    public void setCry(bool b) {
+        cry = b;
+    }
+
+    IEnumerator ExampleCoroutine()
+    {
+        
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(0.1f);
+
     }
 
 }

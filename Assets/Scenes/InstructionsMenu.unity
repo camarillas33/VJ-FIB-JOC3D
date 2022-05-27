@@ -648,6 +648,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1835886219}
     - target: {fileID: 1527614426, guid: 3cf5887c04b2e7e50ab76b5d37586a99, type: 3}
+      propertyPath: fueguito
+      value: 
+      objectReference: {fileID: 1325618784}
+    - target: {fileID: 1527614426, guid: 3cf5887c04b2e7e50ab76b5d37586a99, type: 3}
       propertyPath: runSpeed
       value: 6
       objectReference: {fileID: 0}
@@ -5805,6 +5809,11 @@ PrefabInstance:
     - target: {fileID: 4524703621596028629, guid: c67b27ca6fe432f819c5743b78b0456a,
         type: 3}
       propertyPath: polvito
+      value: 
+      objectReference: {fileID: 1325618784}
+    - target: {fileID: 4524703621596028629, guid: c67b27ca6fe432f819c5743b78b0456a,
+        type: 3}
+      propertyPath: fueguito
       value: 
       objectReference: {fileID: 1325618784}
     - target: {fileID: 4524703621596028629, guid: c67b27ca6fe432f819c5743b78b0456a,
@@ -21454,6 +21463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
+  scene: 0
   player01: {fileID: 457493624}
   player02: {fileID: 629863934}
 --- !u!1 &2056044234
